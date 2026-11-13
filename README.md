@@ -45,7 +45,7 @@ on first use; the page shows the loading phase, and later visits are instant.
 flowchart TD
     A["MIC IN<br/>24 kHz mono WAV"] --> B["LOG-MEL FEATURES<br/>time × frequency"]
     B --> C["LFM3 AUDIO ENCODER<br/>encoder tokens"]
-    C --> D["LFM3-AUDIO LM<br/>language model"]
+    C --> D["LFM3-AUDIO LM<br/>+ speech depth decoder"]
     D --> E["TEXT<br/>chat bubble"]
     D --> F["SPEECH FRAMES<br/>12 codebooks"]
     F --> G["LIQUIDCODEC DECODER<br/>frames → PCM"]
@@ -55,7 +55,8 @@ flowchart TD
 - The **audio encoder** consumes log-mel features, not the raw waveform and not
   LiquidCodec tokens. Its output is projected into the language model.
 - The language model emits **text and speech frames interleaved**. The split
-  above is logical; it is not two separate model calls.
+  above is logical; it is not two separate model calls. A depth decoder samples
+  the 12 codebook IDs of each speech frame.
 - **Only the speech frames** go to LiquidCodec. Text goes directly to the chat
   bubble and never passes through the codec.
 - LiquidCodec decodes the generated speech frames into a 24 kHz PCM waveform.
