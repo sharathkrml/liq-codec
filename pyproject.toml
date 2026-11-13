@@ -6,8 +6,6 @@ dependencies = [
     "fastapi>=0.162.5",
     "numpy>=2.5.4",
     "python-multipart>=0.0.33",
-    "torch>=2.15.0",
-    "transformers>=5.22.2",
     "uvicorn[standard]>=0.54.0",
 ]
 
